@@ -21,10 +21,14 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script>
+
+<script>
 $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();   
+  $("#myBtn").click(function(){
+    $("#myModal").modal();
+  });
 });
 </script>
+
   </body>
 </html>
