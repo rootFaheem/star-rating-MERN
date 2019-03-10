@@ -1,25 +1,39 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Rating from "react-rating";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>hi there</h1>
+        <br />
+        <div className="ratingbox">
+          <Rating
+            className="rating"
+            stop={10}
+            emptySymbol={[
+              "fa fa-star-o fa-2x medium",
+              "fa fa-star-o fa-2x medium",
+              "fa fa-star-o fa-2x medium",
+              "fa fa-star-o fa-2x medium",
+              "fa fa-star-o fa-2x medium",
+              "fa fa-star-o fa-2x medium"
+            ]}
+            fullSymbol={[
+              "fa fa-star fa-2x medium",
+              "fa fa-star fa-2x medium",
+              "fa fa-star fa-2x medium",
+              "fa fa-star fa-2x medium",
+              "fa fa-star fa-2x medium",
+              "fa fa-star fa-2x medium"
+            ]}
+            onChange={rate => {
+              console.log(rate);
+              alert(rate);
+            }}
+          />
+        </div>
       </div>
     );
   }
