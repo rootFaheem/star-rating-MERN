@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const VotesSchema = new Schema({
   totalVotes: {
-    type: Number,
-    required: true
+    type: Number
+    // required: true
   }
 });
 
-module.exports = Vote = mongoose.model("votes", VotesSchema);
+module.exports = Vote = mongoose.model("Votes", VotesSchema);

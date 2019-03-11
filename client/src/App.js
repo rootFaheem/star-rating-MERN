@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "./App.css";
 import Rating from "react-rating";
 
@@ -6,7 +7,19 @@ class App extends Component {
   state = {
     show: false
   };
+  rateHandler(rate) {
+    const selectedRate = rate;
 
+    const data = {
+      newVote: selectedRate,
+      _id: "5c8636eaff567a26a218432f"
+    };
+    console.log(rate);
+    axios
+      .post("/api/votes", data)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
   render() {
     const show = this.state.show;
 
@@ -31,10 +44,7 @@ class App extends Component {
             "fa fa-star fa-2x medium",
             "fa fa-star fa-2x medium"
           ]}
-          onChange={rate => {
-            console.log(rate);
-            alert(rate);
-          }}
+          onChange={rate => this.rateHandler(rate)}
         />
       );
     } else this.rateData = null;
