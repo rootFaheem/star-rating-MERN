@@ -7,9 +7,8 @@ class App extends Component {
   state = {
     show: false
   };
-  rateHandler(rate) {
+  rateHandler = rate => {
     const selectedRate = rate;
-
     const data = {
       newVote: selectedRate,
       _id: "5c8636eaff567a26a218432f"
@@ -17,12 +16,13 @@ class App extends Component {
     console.log(rate);
     axios
       .post("/api/votes", data)
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res);
+      })
       .catch(err => console.log(err));
-  }
+  };
   render() {
     const show = this.state.show;
-
     if (show) {
       this.rateData = (
         <Rating
@@ -45,9 +45,11 @@ class App extends Component {
             "fa fa-star fa-2x medium"
           ]}
           onChange={rate => this.rateHandler(rate)}
-        />
+        >
+          you rated
+        </Rating>
       );
-    } else this.rateData = null;
+    }
 
     return (
       <div>
@@ -56,35 +58,17 @@ class App extends Component {
           <br />
 
           <div className="ratingbox">
-            <div className="container">
+            <div>
               <button
                 type="button"
-                className="btn btn-success btn-lg rating"
-                id="myBtn"
+                className="btn btn-success btn-lg"
                 onClick={() => this.setState({ show: true })}
               >
-                Login
+                Rate it
               </button>
-
-              <div className="modal fade" id="myModal" role="dialog">
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                      >
-                        &times;
-                      </button>
-                      <h3>Rate it</h3>
-                    </div>
-                    <div className="modal-body">{this.rateData}</div>
-                  </div>
-                </div>
-              </div>
+              <div>{this.rateData}</div>
+              <br />
             </div>
-            <br />
           </div>
         </div>
       </div>
