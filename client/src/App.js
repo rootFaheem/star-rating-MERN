@@ -45,9 +45,7 @@ class App extends Component {
             "fa fa-star fa-2x medium"
           ]}
           onChange={rate => this.rateHandler(rate)}
-        >
-          you rated
-        </Rating>
+        />
       );
     }
 
@@ -66,7 +64,10 @@ class App extends Component {
               >
                 Rate it
               </button>
-              <div>{this.rateData}</div>
+              <div>
+                {this.state.show ? <h4>you rated</h4> : null}
+                {this.rateData}
+              </div>
               <br />
             </div>
           </div>
