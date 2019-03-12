@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./App.css";
 import Rating from "react-rating";
+import Google from "./components/google";
 
 class App extends Component {
   state = {
@@ -69,6 +70,7 @@ class App extends Component {
                 {this.rateData}
               </div>
               <br />
+              <Google />
             </div>
           </div>
         </div>
