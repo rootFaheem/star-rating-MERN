@@ -16,7 +16,8 @@ export default class google extends Component {
       isLoggedIn: true,
       userID: response.w3.Eea,
       name: response.w3.ig,
-      email: response.w3.U3
+      email: response.w3.U3,
+      picture: response.profileObj.imageUrl
     });
   };
 
@@ -35,6 +36,7 @@ export default class google extends Component {
             padding: "20px"
           }}
         >
+          <img src={this.state.picture} alt={this.state.name} />
           <p>ID: {this.state.userID}</p>
           <h2>Welcome {this.state.name}</h2>
           Email: {this.state.email}
