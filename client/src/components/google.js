@@ -17,24 +17,32 @@ export default class google extends Component {
   };
 
   rateHandler = rate => {
-    const selectedRate = rate;
-    const name = this.state.userData.name;
-    const data = {
-      newVote: selectedRate,
-      _id: "5c8636eaff567a26a218432f",
-      userName: name,
-      userEmail: this.state.userData.email,
-      userId: this.state.userData.userID
-    };
-    console.log("you have rated: " + rate + " star rating");
-    console.log(data);
-    axios
-      .post("/api/votes", data)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.log(err));
+    const isLoggedIn = this.state.isLoggedIn;
+    if (isLoggedIn) {
+      const selectedRate = rate;
+      const name = this.state.userData.name;
+      const data = {
+        newVote: selectedRate,
+        _id: "5c8636eaff567a26a218432f",
+        userName: name,
+        userEmail: this.state.userData.email,
+        userId: this.state.userData.userID
+      };
+      console.log("you have rated: " + rate + " star rating");
+      console.log(data);
+      axios
+        .post("/api/votes", data)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
+    }
   };
+
+  setTimeout = (() => {
+    console.log(this.state.data);
+  },
+  9000);
 
   responseGoogle = response => {
     console.log(response);
@@ -81,7 +89,7 @@ export default class google extends Component {
             "fa fa-star fa-2x medium",
             "fa fa-star fa-2x medium"
           ]}
-          onChange={rate => setTimeout(this.rateHandler(rate), 9000)}
+          onChange={rate => this.rateHandler(rate)}
         />
       );
     }
