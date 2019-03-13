@@ -10,7 +10,8 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   const newVote = new Vote({
-    totalVotes: req.body.newVote
+    totalVotes: req.body.newVote,
+    userName: req.body.userName
   });
   newVote.save().then(votes => res.json(votes));
 });

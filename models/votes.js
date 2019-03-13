@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 
 const VotesSchema = new Schema({
   totalVotes: {
-    type: Number
+    type: Number,
+    required: true
+  },
+  userName: {
+    type: String
     // required: true
   }
 });

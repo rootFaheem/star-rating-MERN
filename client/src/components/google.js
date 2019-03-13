@@ -1,13 +1,39 @@
 import GoogleLogin from "react-google-login";
+import { GoogleLogout } from "react-google-login";
 
+import Rating from "react-rating";
 import React, { Component } from "react";
+import axios from "axios";
 
 export default class google extends Component {
   state = {
-    isLoggedIn: false,
-    userID: "",
-    name: "",
-    email: ""
+    userData: {
+      isLoggedIn: false,
+      userID: "",
+      name: "",
+      email: ""
+    },
+    show: false
+  };
+
+  rateHandler = rate => {
+    const selectedRate = rate;
+    const name = this.state.userData.name;
+    const data = {
+      newVote: selectedRate,
+      _id: "5c8636eaff567a26a218432f",
+      userName: name,
+      userEmail: this.state.userData.email,
+      userId: this.state.userData.userID
+    };
+    console.log("you have rated: " + rate + " star rating");
+    console.log(data);
+    axios
+      .post("/api/votes", data)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
   };
 
   responseGoogle = response => {
@@ -23,9 +49,44 @@ export default class google extends Component {
 
   componentClicked = () => console.log("clicked");
 
+  logoutHandler = () => {
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    if (auth2 != null) {
+      auth2.signOut().then(auth2.disconnect().then(this.props.onLogoutSuccess));
+      window.location.reload();
+    }
+  };
   render() {
-    let googleContent;
+    const isLoggedIn = this.state.isLoggedIn;
+    const show = this.state.show;
 
+    if (show && isLoggedIn) {
+      this.rateData = (
+        <Rating
+          className="rating"
+          stop={5}
+          emptySymbol={[
+            "fa fa-star-o fa-2x medium",
+            "fa fa-star-o fa-2x medium",
+            "fa fa-star-o fa-2x medium",
+            "fa fa-star-o fa-2x medium",
+            "fa fa-star-o fa-2x medium",
+            "fa fa-star-o fa-2x medium"
+          ]}
+          fullSymbol={[
+            "fa fa-star fa-2x medium",
+            "fa fa-star fa-2x medium",
+            "fa fa-star fa-2x medium",
+            "fa fa-star fa-2x medium",
+            "fa fa-star fa-2x medium",
+            "fa fa-star fa-2x medium"
+          ]}
+          onChange={rate => setTimeout(this.rateHandler(rate), 9000)}
+        />
+      );
+    }
+
+    let googleContent;
     if (this.state.isLoggedIn) {
       googleContent = (
         <div
@@ -36,9 +97,20 @@ export default class google extends Component {
             padding: "20px"
           }}
         >
-          <img src={this.state.picture} alt={this.state.name} />
+          <div>
+            <GoogleLogout
+              buttonText="Logout"
+              onLogoutSuccess={this.logoutHandler}
+            />
+          </div>
+          <img
+            src={this.state.picture}
+            alt={this.state.name}
+            style={{ marginTop: "20px" }}
+          />
+          <br />
           <p>ID: {this.state.userID}</p>
-          <h2>Welcome {this.state.name}</h2>
+          <h2>{this.state.name}</h2>
           Email: {this.state.email}
         </div>
       );
@@ -46,7 +118,7 @@ export default class google extends Component {
       googleContent = (
         <GoogleLogin
           clientId="536969641773-30tao8nks47n0ijp46n924s52nocm179.apps.googleusercontent.com"
-          buttonText="Login"
+          buttonText="Login with Google"
           onSuccess={this.responseGoogle}
           onClick={this.componentClicked}
           onFailure={this.responseGoogle}
@@ -54,6 +126,30 @@ export default class google extends Component {
       );
     }
 
-    return <div>{googleContent}</div>;
+    return (
+      <div>
+        <div>{googleContent}</div>
+
+        <div>
+          {this.state.isLoggedIn ? (
+            <button
+              type="button"
+              style={{ marginTop: "20px" }}
+              className="btn btn-success btn-lg"
+              onClick={() => this.setState({ show: true })}
+            >
+              Rate Now
+            </button>
+          ) : null}
+
+          {this.state.show ? (
+            <div>
+              your rating:
+              {this.rateData}
+            </div>
+          ) : null}
+        </div>
+      </div>
+    );
   }
 }
