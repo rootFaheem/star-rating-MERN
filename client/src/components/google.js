@@ -18,7 +18,7 @@ export default class google extends Component {
 
   rateHandler = rate => {
     const isLoggedIn = this.state.isLoggedIn;
-    if (isLoggedIn) {
+    if (isLoggedIn === true) {
       const selectedRate = rate;
       const name = this.state.userData.name;
       const data = {
@@ -39,10 +39,10 @@ export default class google extends Component {
     }
   };
 
-  setTimeout = (() => {
-    console.log(this.state.data);
-  },
-  9000);
+  myfunnc = () => {
+    console.log(this.state.userData.name);
+    console.log("after 9 sec");
+  };
 
   responseGoogle = response => {
     console.log(response);
@@ -89,7 +89,9 @@ export default class google extends Component {
             "fa fa-star fa-2x medium",
             "fa fa-star fa-2x medium"
           ]}
-          onChange={rate => this.rateHandler(rate)}
+          onChange={rate => {
+            this.rateHandler(rate);
+          }}
         />
       );
     }
@@ -157,6 +159,7 @@ export default class google extends Component {
             </div>
           ) : null}
         </div>
+        <button onClick={() => setTimeout(this.myfunnc, 3000)}> test</button>
       </div>
     );
   }
